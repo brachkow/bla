@@ -42,7 +42,7 @@ onUnmounted(() => {
 })
 
 const connectWebSocket = () => {
-  const wsUrl = `ws://localhost:8787/ws/${sessionId.value}/${userId.value}`
+  const wsUrl = `ws://${import.meta.env.VITE_BACKEND_URL}/ws/${sessionId.value}/${userId.value}`
   ws.value = new WebSocket(wsUrl)
 
   ws.value.onopen = () => {
