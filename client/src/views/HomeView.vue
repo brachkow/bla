@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 interface ChatMessage {
   type: 'typing' | 'stop_typing' | 'join' | 'leave' | 'connect'
@@ -21,9 +21,8 @@ const isConnected = ref(false)
 const partnerConnected = ref(false)
 const partnerUserId = ref('')
 const ws = ref<WebSocket | null>(null)
-const typingTimeout = ref<NodeJS.Timeout>()
+const typingTimeout = ref<number>()
 const theyMessageRef = ref<HTMLElement | null>(null)
-let splitText: SplitText | null = null
 
 // Initialize session and user IDs
 onMounted(() => {
