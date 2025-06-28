@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { customAlphabet } from 'nanoid'
 
-// Generate unique IDs
-const generateId = () => Math.random().toString(36).substr(2, 9)
+const generateSessionId = () => {
+  const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+  return [nanoid(3), nanoid(3)].join('-')
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +16,7 @@ const router = createRouter({
       component: HomeView,
       beforeEnter: (to, from, next) => {
         // Generate new session ID and redirect
-        const sessionId = generateId()
+        const sessionId = generateSessionId()
         next(`/${sessionId}`)
       },
     },
