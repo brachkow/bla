@@ -47,7 +47,8 @@ onUnmounted(() => {
 })
 
 const connectWebSocket = () => {
-  const wsUrl = `ws://${import.meta.env.VITE_BACKEND_URL}/ws/${sessionId.value}/${userId.value}`
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+  const wsUrl = `${protocol}//${import.meta.env.VITE_BACKEND_URL}/ws/${sessionId.value}/${userId.value}`
   ws.value = new WebSocket(wsUrl)
 
   ws.value.onopen = () => {

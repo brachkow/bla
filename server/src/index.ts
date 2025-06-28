@@ -25,7 +25,7 @@ const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app })
 const sessions = new Map<string, SessionData>()
 
 app.use('/*', cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: '*', // More permissive during development
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }))
