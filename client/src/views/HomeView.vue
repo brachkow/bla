@@ -23,7 +23,6 @@ const partnerConnected = ref(false)
 const partnerUserId = ref('')
 const ws = ref<WebSocket | null>(null)
 const typingTimeout = ref<number>()
-const theyMessageRef = ref<HTMLElement | null>(null)
 
 // Initialize session and user IDs
 onMounted(() => {
@@ -180,7 +179,13 @@ const copySessionLink = async () => {
       class="Message Message_They relative"
       :class="{ active: partnerConnected && they.length > 0 }"
     >
-      {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
+      <div class="Message__Text" v-if="they">
+        {{ they }}
+      </div>
+      <div class="Message__Placeholder" v-else-if="partnerConnected">
+        {{ 'Nothing yet...' }}
+      </div>
+      <div class="Message__Placeholder" v-else>Waiting for partner to join...</div>
       <VOnlineIndicator :connected="partnerConnected" />
     </div>
     <textarea
@@ -216,5 +221,13 @@ body,
 }
 .Message_You {
   @apply bg-blue-400 text-white;
+}
+
+.Message__Text {
+  @apply text-black;
+}
+
+.Message__Placeholder {
+  @apply text-gray-400;
 }
 </style>
