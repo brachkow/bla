@@ -171,7 +171,7 @@ const copySessionLink = async () => {
 </script>
 
 <template>
-  <div class="chat-container">
+  <div class="App">
     <div class="header">
       <h2>Real-time Chat</h2>
       <div class="status">
@@ -184,26 +184,15 @@ const copySessionLink = async () => {
       </div>
       <button @click="copySessionLink" class="share-btn">Share Session Link</button>
     </div>
-
-    <div class="chat-areas">
-      <div class="chat-section">
-        <h3>They're typing:</h3>
-        <div class="text-display" :class="{ active: partnerConnected && they.length > 0 }">
-          {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
-        </div>
-      </div>
-
-      <div class="chat-section">
-        <h3>You're typing:</h3>
-        <textarea
-          v-model="you"
-          :disabled="!isConnected"
-          placeholder="Start typing... your partner will see it in real-time!"
-          class="text-input"
-        ></textarea>
-      </div>
+    <div class="Message Message_They" :class="{ active: partnerConnected && they.length > 0 }">
+      {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
     </div>
-
+    <textarea
+      v-model="you"
+      :disabled="!isConnected"
+      placeholder="Start typing... your partner will see it in real-time!"
+      class="Message Message_You"
+    ></textarea>
     <div class="info">
       <p><strong>Session ID:</strong> {{ sessionId }}</p>
       <p><strong>Your ID:</strong> {{ userId }}</p>
@@ -211,156 +200,29 @@ const copySessionLink = async () => {
   </div>
 </template>
 
-<style scoped>
-.chat-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
+<style>
+@reference '@/assets/main.css';
+
+html,
+body,
+#app,
+.App {
+  @apply h-full w-full;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #eee;
+.App {
+  @apply grid gap-4 p-4;
+  grid-template-rows: min-content 1fr 1fr min-content;
 }
 
-.header h2 {
-  margin: 0 0 1rem 0;
-  color: #333;
+.Message {
+  @apply rounded-xl p-4 resize-none outline-none text-center text-2xl;
 }
 
-.status {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1rem;
+.Message_They {
+  @apply bg-gray-200 text-black;
 }
-
-.connection-status,
-.partner-status {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.connection-status {
-  background: #ffebee;
-  color: #c62828;
-}
-
-.connection-status.connected {
-  background: #e8f5e8;
-  color: #2e7d32;
-}
-
-.partner-status {
-  background: #fff3e0;
-  color: #ef6c00;
-}
-
-.partner-status.connected {
-  background: #e3f2fd;
-  color: #1976d2;
-}
-
-.share-btn {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-.share-btn:hover {
-  background: #45a049;
-}
-
-.chat-areas {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.chat-section h3 {
-  margin: 0 0 1rem 0;
-  color: #555;
-  font-size: 1.2rem;
-}
-
-.text-display {
-  min-height: 200px;
-  padding: 1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background: #f9f9f9;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  transition: all 0.3s ease;
-}
-
-.text-display.active {
-  border-color: #4caf50;
-  background: #f1f8e9;
-}
-
-.text-input {
-  width: 100%;
-  min-height: 200px;
-  padding: 1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  resize: vertical;
-  transition: border-color 0.3s ease;
-}
-
-.text-input:focus {
-  outline: none;
-  border-color: #2196f3;
-}
-
-.text-input:disabled {
-  background: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.info {
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-}
-
-.info p {
-  margin: 0.5rem 0;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .chat-areas {
-    grid-template-columns: 1fr;
-  }
-
-  .status {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .chat-container {
-    padding: 1rem;
-  }
+.Message_You {
+  @apply bg-blue-400 text-white;
 }
 </style>
