@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import VOnlineIndicator from '@/components/VOnlineIndicator.vue'
+import gsap from 'gsap'
+import { SplitText } from 'gsap/SplitText'
+
+gsap.registerPlugin(SplitText)
 
 interface ChatMessage {
   type: 'typing' | 'stop_typing' | 'join' | 'leave' | 'connect'
@@ -84,6 +88,23 @@ const connectWebSocket = () => {
     console.error('WebSocket error:', error)
   }
 }
+
+watch(
+  () => they.value,
+  async () => {
+    await nextTick()
+    const split = SplitText.create('.animate-they-text', { type: 'chars', autoSplit: true })
+    gsap.from(split.chars, {
+      duration: 1,
+      autoAlpha: 0,
+      stagger: 0.05,
+      scale: 1.5,
+    })
+  },
+  {
+    immediate: true,
+  },
+)
 
 const handleMessage = (message: ChatMessage) => {
   switch (message.type) {
@@ -179,7 +200,7 @@ const copySessionLink = async () => {
       class="Message Message_They relative"
       :class="{ active: partnerConnected && they.length > 0 }"
     >
-      <div class="Message__Text" v-if="they">
+      <div class="Message__Text animate-they-text" v-if="they">
         {{ they }}
       </div>
       <div class="Message__Placeholder" v-else-if="partnerConnected">
