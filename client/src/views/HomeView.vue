@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
+import VOnlineIndicator from '@/components/VOnlineIndicator.vue'
 
 interface ChatMessage {
   type: 'typing' | 'stop_typing' | 'join' | 'leave' | 'connect'
@@ -175,10 +176,7 @@ const copySessionLink = async () => {
       :class="{ active: partnerConnected && they.length > 0 }"
     >
       {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
-      <div
-        class="w-4 h-4 rounded-full absolute top-4 right-4 animate-ping"
-        :class="partnerConnected ? 'bg-green-500' : 'bg-red-500'"
-      ></div>
+      <VOnlineIndicator :connected="partnerConnected" />
     </div>
     <textarea
       v-model="you"
