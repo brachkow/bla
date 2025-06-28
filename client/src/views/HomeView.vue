@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import VOnlineIndicator from '@/components/VOnlineIndicator.vue'
+import VShare from '@/components/VShare.vue'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 
@@ -187,30 +188,13 @@ watch(you, (newValue) => {
     }, 500)
   }
 })
-
-const copySessionLink = async () => {
-  const link = `${window.location.origin}/${sessionId.value}`
-  try {
-    await navigator.clipboard.writeText(link)
-    alert('Session link copied to clipboard!')
-  } catch (error) {
-    console.error('Failed to copy link:', error)
-    // Fallback: show the link
-    prompt('Copy this link to share:', link)
-  }
-}
 </script>
 
 <template>
   <div class="App">
     <div class="flex justify-between items-center p-4">
       <h2>Bla — real-time chat</h2>
-      <button
-        @click="copySessionLink"
-        class="bg-blue-400 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-500 transition-all cursor-pointer"
-      >
-        Share Session Link
-      </button>
+      <VShare :session-id="sessionId" />
     </div>
     <div
       class="Message Message_They relative"
