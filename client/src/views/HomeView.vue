@@ -166,20 +166,19 @@ const copySessionLink = async () => {
 
 <template>
   <div class="App">
-    <div class="header">
-      <h2>Real-time Chat</h2>
-      <div class="status">
-        <span class="connection-status" :class="{ connected: isConnected }">
-          {{ isConnected ? 'Connected' : 'Connecting...' }}
-        </span>
-        <span class="partner-status" :class="{ connected: partnerConnected }">
-          {{ partnerConnected ? 'Partner Online' : 'Waiting for partner...' }}
-        </span>
-      </div>
+    <div class="flex justify-between items-center p-4">
+      <h2>Bla — real-time chat</h2>
       <button @click="copySessionLink" class="share-btn">Share Session Link</button>
     </div>
-    <div class="Message Message_They" :class="{ active: partnerConnected && they.length > 0 }">
+    <div
+      class="Message Message_They relative"
+      :class="{ active: partnerConnected && they.length > 0 }"
+    >
       {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
+      <div
+        class="w-16 h-16 rounded-full absolute top-16 right-16"
+        :class="{partnerConnected ? 'bg-green-500' : 'bg-red-500'}"
+      ></div>
     </div>
     <textarea
       v-model="you"
@@ -187,10 +186,6 @@ const copySessionLink = async () => {
       placeholder="Start typing... your partner will see it in real-time!"
       class="Message Message_You"
     ></textarea>
-    <div class="info">
-      <p><strong>Session ID:</strong> {{ sessionId }}</p>
-      <p><strong>Your ID:</strong> {{ userId }}</p>
-    </div>
   </div>
 </template>
 
@@ -206,7 +201,7 @@ body,
 
 .App {
   @apply grid gap-4 p-4;
-  grid-template-rows: min-content 1fr 1fr min-content;
+  grid-template-rows: min-content 1fr 1fr;
 }
 
 .Message {
