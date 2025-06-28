@@ -225,12 +225,15 @@ const copySessionLink = async () => {
       <div class="Message__Placeholder" v-else>Waiting for partner to join...</div>
       <VOnlineIndicator :connected="partnerConnected" />
     </div>
-    <textarea
-      v-model="you"
-      :disabled="!isConnected"
-      placeholder="Start typing... your partner will see it in real-time!"
-      class="Message Message_You"
-    ></textarea>
+    <div class="relative">
+      <textarea
+        v-model="you"
+        :disabled="!isConnected"
+        placeholder="Start typing... your partner will see it in real-time!"
+        class="Message Message_You absolute inset-0"
+      ></textarea>
+      <VOnlineIndicator :connected="isConnected" />
+    </div>
   </div>
 </template>
 
