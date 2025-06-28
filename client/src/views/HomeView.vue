@@ -177,7 +177,7 @@ const copySessionLink = async () => {
       {{ they || (partnerConnected ? 'Nothing yet...' : 'Waiting for partner to join...') }}
       <div
         class="w-16 h-16 rounded-full absolute top-16 right-16 animate-ping"
-        :class="{partnerConnected ? 'bg-green-500' : 'bg-red-500'}"
+        :class="partnerConnected ? 'bg-green-500' : 'bg-red-500'"
       ></div>
     </div>
     <textarea
