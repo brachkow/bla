@@ -89,17 +89,33 @@ const connectWebSocket = () => {
   }
 }
 
+const prevLength = ref(0)
+
 watch(
   () => they.value,
   async () => {
     await nextTick()
-    const split = SplitText.create('.animate-they-text', { type: 'chars', autoSplit: true })
-    gsap.from(split.chars, {
-      duration: 1,
-      autoAlpha: 0,
-      stagger: 0.05,
-      scale: 1.5,
+    const split = SplitText.create('.animate-they-text', {
+      type: 'chars',
+      autoSplit: true,
+      propIndex: true,
     })
+
+    gsap.from(
+      split.chars.filter((char) => {
+        const charIndex = Number((char as HTMLElement).style.getPropertyValue('--char'))
+        if (split.chars.length > prevLength.value) return charIndex > prevLength.value
+      }),
+      {
+        duration: 0.3 * (Math.random() + 0.5),
+        autoAlpha: 0,
+        stagger: 0.05,
+        scale: 1.5,
+        rotate: 10 * Math.random() * (Math.random() > 0.5 ? 1 : -1),
+        ease: 'power2.inOut',
+      },
+    )
+    prevLength.value = split.chars.length
   },
   {
     immediate: true,
