@@ -9,6 +9,10 @@ interface ChatMessage {
   timestamp: number
 }
 
+const props = defineProps<{
+  sessionId: string
+}>()
+
 const they = ref('')
 const you = ref('')
 const sessionId = ref('')
@@ -18,23 +22,14 @@ const partnerConnected = ref(false)
 const partnerUserId = ref('')
 const ws = ref<WebSocket | null>(null)
 const typingTimeout = ref<NodeJS.Timeout>()
-
-// Generate unique IDs
-const generateId = () => Math.random().toString(36).substr(2, 9)
+const theyMessageRef = ref<HTMLElement | null>(null)
+let splitText: SplitText | null = null
 
 // Initialize session and user IDs
 onMounted(() => {
-  // Get or create session ID from URL params or generate new one
-  const urlParams = new URLSearchParams(window.location.search)
-  sessionId.value = urlParams.get('session') || generateId()
-  userId.value = generateId()
-
-  // Update URL with session ID
-  if (!urlParams.get('session')) {
-    const newUrl = `${window.location.pathname}?session=${sessionId.value}`
-    window.history.replaceState({}, '', newUrl)
-  }
-
+  // Get sessionId from route params (guaranteed to exist due to route guard)
+  sessionId.value = props.sessionId
+  userId.value = Math.random().toString(36).substr(2, 9)
   connectWebSocket()
 })
 
@@ -158,7 +153,7 @@ watch(you, (newValue) => {
 })
 
 const copySessionLink = async () => {
-  const link = `${window.location.origin}${window.location.pathname}?session=${sessionId.value}`
+  const link = `${window.location.origin}/${sessionId.value}`
   try {
     await navigator.clipboard.writeText(link)
     alert('Session link copied to clipboard!')
