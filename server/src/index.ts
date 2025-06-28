@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { createNodeWebSocket } from '@hono/node-ws'
 import { cors } from 'hono/cors'
 import { serve } from '@hono/node-server'
+import 'dotenv/config'
 
 interface ChatMessage {
   type: 'typing' | 'stop_typing' | 'join' | 'leave' | 'connect'
@@ -25,7 +26,7 @@ const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app })
 const sessions = new Map<string, SessionData>()
 
 app.use('/*', cors({
-  origin: '*', // More permissive during development
+  origin: process.env.FRONTEND_URL as string,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }))

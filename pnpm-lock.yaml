@@ -92,6 +92,9 @@ importers:
       '@hono/node-ws':
         specifier: ^1.0.7
         version: 1.2.0(@hono/node-server@1.14.4(hono@4.8.3))(hono@4.8.3)
+      dotenv:
+        specifier: ^17.0.0
+        version: 17.0.0
       hono:
         specifier: ^4.8.3
         version: 4.8.3
@@ -1300,6 +1303,10 @@ packages:
   detect-libc@2.0.4:
     resolution: {integrity: sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA==}
     engines: {node: '>=8'}
+
+  dotenv@17.0.0:
+    resolution: {integrity: sha512-A0BJ5lrpJVSfnMMXjmeO0xUnoxqsBHWCoqqTnGwGYVdnctqXXUEhJOO7LxmgxJon9tEZFGpe0xPRX0h2v3AANQ==}
+    engines: {node: '>=12'}
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -3443,6 +3450,8 @@ snapshots:
   define-lazy-prop@3.0.0: {}
 
   detect-libc@2.0.4: {}
+
+  dotenv@17.0.0: {}
 
   eastasianwidth@0.2.0: {}
 

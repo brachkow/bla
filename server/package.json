@@ -8,13 +8,14 @@
     "deploy": "node dist/index.js"
   },
   "dependencies": {
-    "hono": "^4.8.3",
+    "@hono/node-server": "^1.0.0",
     "@hono/node-ws": "^1.0.7",
-    "@hono/node-server": "^1.0.0"
+    "dotenv": "^17.0.0",
+    "hono": "^4.8.3"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "tsx": "^4.0.0"
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
