@@ -169,7 +169,12 @@ const copySessionLink = async () => {
   <div class="App">
     <div class="flex justify-between items-center p-4">
       <h2>Bla — real-time chat</h2>
-      <button @click="copySessionLink" class="share-btn">Share Session Link</button>
+      <button
+        @click="copySessionLink"
+        class="bg-blue-400 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-500 transition-all cursor-pointer"
+      >
+        Share Session Link
+      </button>
     </div>
     <div
       class="Message Message_They relative"
@@ -203,7 +208,7 @@ body,
 }
 
 .Message {
-  @apply rounded-xl p-4 resize-none outline-none text-center text-2xl;
+  @apply rounded-xl p-4 resize-none outline-none text-center text-4xl font-extrabold;
 }
 
 .Message_They {
