@@ -204,10 +204,9 @@ watch(you, (newValue) => {
       <div class="Message__Text animate-they-text" v-if="they">
         {{ they }}
       </div>
-      <div class="Message__Placeholder" v-else-if="partnerConnected">
-        {{ 'Nothing yet...' }}
+      <div class="Message__Placeholder" v-else-if="!partnerConnected">
+        Waiting other user to join...
       </div>
-      <div class="Message__Placeholder" v-else>Waiting for partner to join...</div>
       <VOnlineIndicator :connected="partnerConnected" />
     </div>
     <div class="relative">
@@ -242,7 +241,7 @@ body,
 }
 
 .Message_They {
-  @apply bg-gray-200 text-black;
+  @apply bg-gray-200 text-black flex items-center justify-center;
 }
 .Message_You {
   @apply bg-blue-400 text-white;
